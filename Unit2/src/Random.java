@@ -7,6 +7,7 @@
 
 public class Random {
 	
+	
 	public static void main(String[] args) {
 		
 		double a = -2., b = 2.;
@@ -18,6 +19,7 @@ public class Random {
 		
 		for(int i=0; i<nPoints; i++)
 			System.out.println(normalPoints[i]);
+		
 	}
 
 }
