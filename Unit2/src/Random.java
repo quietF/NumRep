@@ -6,12 +6,18 @@
 
 
 public class Random {
-
+	
 	public static void main(String[] args) {
 		
-		for(int i=0; i<=50; i++)
-			System.out.println("Next number: " + Math.random());
-
+		double a = -2., b = 2.;
+		double mu = 0., sd = 1.;
+		Distribution Normal = new Distribution(a, b, mu, sd);
+		
+		int nPoints = 1000;
+		double[] normalPoints = Normal.generateNormalData(nPoints);
+		
+		for(int i=0; i<nPoints; i++)
+			System.out.println(normalPoints[i]);
 	}
 
 }
