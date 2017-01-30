@@ -1,6 +1,5 @@
 import Jama.Matrix;
 import java.util.Random;
-import java.time.*;
 
 
 public class MyGaussianPdf {
@@ -140,7 +139,7 @@ public class MyGaussianPdf {
 	public int lessOnePercent(int nDivisions){
 		int nPoints = 100;
 		double error = this.getError(nPoints, nDivisions);
-		while(error > 0.01){
+		while(error > 0.001){
 			nPoints += 10;
 			error = this.getError(nPoints, nDivisions);
 		}
@@ -150,7 +149,6 @@ public class MyGaussianPdf {
 	}
 	
 	public static void main(String[] args) {
-		final long startTime = System.currentTimeMillis();
 		double a = -4.;
 		double b = 4.;
 		MyGaussianPdf aleatorio = new MyGaussianPdf(a, b);
@@ -168,8 +166,7 @@ public class MyGaussianPdf {
 		+ aleatorio.integralNumeric(lessOnePercentPoints, nDivisions));
 		System.out.println("The analytical integral is: " + 
 		aleatorio.integralAnalytic());
-		final long endTime = System.currentTimeMillis();
-		System.out.println("Total execution time: " + (endTime - startTime) + " miliseconds.");
+
 	}
 
 }
