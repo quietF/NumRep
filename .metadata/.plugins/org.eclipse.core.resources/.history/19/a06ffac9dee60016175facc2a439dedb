@@ -4,8 +4,8 @@ public class Test {
 	
 	public static void main(String[] args) {
 		Distribution normal = new Distribution();
-		double a = -4.;
-		double b = 4.;
+		double a = -1.;
+		double b = 1.;
 		Random aleatorio = new Random(a, b, normal);
 		
 		double[] fmax = aleatorio.findFmax();
@@ -15,7 +15,7 @@ public class Test {
 		
 		System.out.println(aleatorio.getRandBelow());
 		
-		int nIterations = 100000;
+		int nIterations = 10000000;
 		
 		//double[][] data = new double[nIterations][1];
 		
@@ -26,7 +26,6 @@ public class Test {
 		Matrix A = new Matrix(data);
 		
 		fw.writeFile("test.txt", A);
-		System.out.println("a");
 	}
 
 }

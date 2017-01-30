@@ -48,7 +48,7 @@ public class Random {
 		double randNumber = this.a + (this.b - this.a) * Math.random();
 		double y1 = this.distribution.getYvalue(randNumber);
 		double y2 = Math.random() * this.distMax[1];
-		if(y2 < y1) return randNumber;
+		if(y2 > y1) return randNumber;
 		else return this.getRandBelow();
 	}
 	

@@ -34,6 +34,7 @@ public class Random {
 				xmax = this.a;
 		int nIterations = 1000;
 		double dx = (this.b - this.a) / nIterations;
+		System.out.println(dx);
 		for(int i=0; i<nIterations; i++){
 			faux = this.distribution.getYvalue(this.a + i*dx);
 			if(faux > fmax){
