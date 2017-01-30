@@ -1,0 +1,149 @@
+import Jama.Matrix;
+import java.util.Random;
+
+
+public class MyGaussianPdf {
+	
+	private double a = -1.;
+	private double b = 1.;
+	private double mu = 0.;
+	private double sd = 1.;
+	private double[] distMax = new double[2];
+	
+	public MyGaussianPdf(double a, double b) {
+		this.a = a;
+		this.b = b;
+		this.distMax = this.findFmax();
+	}
+
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
+	}
+	
+	public double evaluate(double x){
+		return Math.exp(-(x-this.mu)*(x-this.mu) / (2 * this.sd * this.sd));
+	}
+	
+	public double[] findFmax(){
+		double fmax = this.evaluate(this.a), faux = fmax,
+				xmax = this.a;
+		int nIterations = 1000;
+		double dx = (this.b - this.a) / nIterations;
+		for(int i=0; i<nIterations; i++){
+			faux = this.evaluate(this.a + i*dx);
+			if(faux > fmax){
+				fmax = faux;
+				xmax = this.a + i*dx;
+			}
+		}
+		return new double[]{xmax, fmax};
+	}
+	
+	public double getRandBelow(){
+		double randNumber = this.a + (this.b - this.a) * Math.random();
+		double y1 = this.evaluate(randNumber);
+		double y2 = Math.random() * this.distMax[1];
+		if(y2 < y1) return randNumber;
+		else return this.getRandBelow();
+	}
+	
+	public double[][] getData(int nIterations){
+		
+		double[][] data = new double[nIterations][1];
+		for(int i=0; i<nIterations; i++) data[i][0] = this.getRandBelow();
+		return data;
+	}
+	
+	public double[][] getDataBuiltIn(int nIterations){
+		Random randomGenerator = new Random();
+		double[][] data = new double[nIterations][1];
+		for(int i=0; i<nIterations; i++) data[i][0] = randomGenerator.nextGaussian();
+		return data;
+	}
+	
+	public void writeToFile(String outFile, int nIterations, boolean builtin){
+		
+		double[][] data;
+		if(!builtin) data = this.getData(nIterations);
+		else data = this.getDataBuiltIn(nIterations);
+		MyFileWriter fw = new MyFileWriter();
+		Matrix A = new Matrix(data);
+		fw.writeFile(outFile, A);
+	}
+	
+	public double integralInterval(double min, double max, int nPoints){
+		MyGaussianPdf oneSigma = new MyGaussianPdf(min, max);
+		double top = 1.001 * oneSigma.distMax[1];
+		double totalArea = top * oneSigma.sd;
+		int pointsIn = 0;
+		double[] coords = new double[2];
+		for(int i=0 ;i<nPoints; i++){
+			coords[0] = min + (max - min) * Math.random();
+			coords[1] = top * Math.random();
+			if(coords[1] <= oneSigma.evaluate(coords[0])) pointsIn += 1;
+		}
+		return totalArea * pointsIn/(double)nPoints;
+	}
+	
+	public double integralNumeric(int nPoints, int nDivisions){
+		/*
+		 * returns the numerical value of the gaussian distribution from
+		 * -5 sigma to 5 sigma.
+		 */
+		double min = - 5 * this.sd;
+		double max = 5 * this.sd;
+		int divPoints;
+		double interval;
+		if(nDivisions == 0){
+			divPoints = nPoints;
+			return this.integralInterval(min, max, nPoints);
+		}
+		else{
+			divPoints = nPoints / nDivisions;
+			interval = (max - min) / (double)nDivisions;
+		}
+		double ans = 0.;
+
+		for(int i=0; i<nDivisions; i++)
+			ans += interval * this.integralInterval(min + i * interval, 
+					min + (i+1)*interval, divPoints);
+		return ans;
+	}
+	
+	public double integralAnalytic(){
+		/*
+		 * returns the analytic integral of the gaussian distribution from
+		 * -int to inf.
+		 */
+		
+		return this.sd * Math.sqrt(2 * Math.PI);
+	}
+	
+	public static void main(String[] args) {
+		double a = -4.;
+		double b = 4.;
+		MyGaussianPdf aleatorio = new MyGaussianPdf(a, b);
+		
+		int nIterations = 1000;
+		
+		aleatorio.writeToFile("gaussianBuiltin.txt", nIterations, true);
+		aleatorio.writeToFile("gaussian.txt", nIterations, false);
+		
+		System.out.println(aleatorio.integralNumeric(10000000, 6));
+		System.out.println(aleatorio.integralAnalytic());
+
+	}
+
+}
