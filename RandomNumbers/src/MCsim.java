@@ -13,47 +13,6 @@ public class MCsim {
 		this.distMax = this.findFmax();
 	}
 	
-	public double evaluateDist(double ti){ return Math.exp(- ti / tau) / tau;}
-	
-	public double[] findFmax(){
-		double fmax = this.evaluateDist(this.a), faux = fmax,
-				tmax = this.a;
-		int nIterations = 1000;
-		double dx = (this.b - this.a) / nIterations;
-		for(int i=0; i<nIterations; i++){
-			faux = this.evaluateDist(this.a + i*dx);
-			if(faux > fmax){
-				fmax = faux;
-				tmax = this.a + i*dx;
-			}
-		}
-		return new double[]{tmax, fmax};
-	}
-	
-	public double getRandBelow(){
-		double randNumber = this.a + (this.b - this.a) * Math.random();
-		double y1 = this.evaluateDist(randNumber);
-		double y2 = Math.random() * this.distMax[1];
-		if(y2 < y1) return randNumber;
-		else return this.getRandBelow();
-	}
-	
-	public double[][] getnRandBelow(int n){
-		double[][] nrand = new double[n][1];
-		for(int i=0; i<n; i++)
-			nrand[i][0] = this.getRandBelow();
-		return nrand;
-	}
-	
-	public void writeToFile(String outFile, int nIterations){
-		
-		double[][] data;
-		data = this.getnRandBelow(nIterations);
-		MyFileWriter fw = new MyFileWriter();
-		Matrix A = new Matrix(data);
-		fw.writeFile(outFile, A);
-	}
-	
 	public double integralInterval(double min, double max, int nPoints){
 		MCsim sub_montecarlo = new MCsim(min, max);
 		double top = 1.001 * sub_montecarlo.distMax[1];
@@ -80,10 +39,75 @@ public class MCsim {
 		return ans;
 	}
 	
+	public double evaluateDist(double ti){
+		/*
+		 * Return the probability distribution function for a given
+		 * value of t.
+		 */
+		return Math.exp(- ti / tau) / tau;
+	}
+	
+	public double[] findFmax(){
+		/*
+		 * Returns the max value of the function. (probably overkill)
+		 */
+		double fmax = this.evaluateDist(this.a), faux = fmax,
+				tmax = this.a;
+		int nIterations = 1000;
+		double dx = (this.b - this.a) / nIterations;
+		for(int i=0; i<nIterations; i++){
+			faux = this.evaluateDist(this.a + i*dx);
+			if(faux > fmax){
+				fmax = faux;
+				tmax = this.a + i*dx;
+			}
+		}
+		return new double[]{tmax, fmax};
+	}
+	
+	public double getRandBelow(){
+		/*
+		 * return a weighted random number between 0 and 1.
+		 */
+		double randNumber = this.a + (this.b - this.a) * Math.random();
+		double y1 = this.evaluateDist(randNumber);
+		double y2 = Math.random() * this.distMax[1];
+		if(y2 < y1) return randNumber;
+		else return this.getRandBelow();
+	}
+	
+	public double[][] getnRandBelow(int n){
+		/*
+		 * return a matrix of dims [n][1] with n weighted randomly
+		 * generated data.
+		 */
+		double[][] nrand = new double[n][1];
+		for(int i=0; i<n; i++)
+			nrand[i][0] = this.getRandBelow();
+		return nrand;
+	}
+	
+	public void writeToFile(String outFile, int nIterations){
+		/*
+		 * Write nIterations of weighted randomly generated data
+		 * to outFile. This is then plotted with:
+		 * python3 MyPlot.py outFile
+		 * to generate a histogram (exponential).
+		 */
+		double[][] data;
+		data = this.getnRandBelow(nIterations);
+		MyFileWriter fw = new MyFileWriter();
+		Matrix A = new Matrix(data);
+		fw.writeFile(outFile, A);
+	}
+	
 	public double avgTau(int n){
 		/*
 		 * return the average value of tau for one simulation that
 		 * is created with n data points.
+		 * 
+		 * Since the data set is finite, the average value of tau 
+		 * will not correspond exactly to the input value of tau (2.2 ms).
 		 */
 		double avgTau = 0.;
 		for(int i=0; i<n; i++) avgTau += this.getRandBelow() / (double)n;
@@ -105,7 +129,8 @@ public class MCsim {
 		/*
 		 * Write nSets of averaged tau values obtained from nIterations
 		 * of random number simulations to the outFile.
-		 * This is then plotted with: python3 MyPlot.py outFile
+		 * This is then plotted with: python3 MyPlot.py outFile 
+		 * This generates a histogram (gaussian).
 		 */
 		double[][] data = this.estimateTau(nSets, nIterations);
 		MyFileWriter fw = new MyFileWriter();
@@ -120,9 +145,6 @@ public class MCsim {
 		montecarlo.writeToFile("mc_trial.txt", nIterations);
 		int nSets = 500;
 		montecarlo.writeToFileTauData("tau_data.txt", nSets, nIterations);
-		//int nPoints = 100000;
-		//System.out.println("The numerical integral is: " + 
-				//montecarlo.integralNumeric(0., 1., nPoints));
 	}
 
 }
