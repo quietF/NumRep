@@ -7,5 +7,7 @@ javac MCsim.java
 
 java MCsim
 
-python3 MyPlot.py mc_trial.txt
-python3 MyPlot.py tau_data.txt
+python3 MyPlot.py mc_trial.txt &
+python3 MyPlot.py tau_data.txt &
+
+rm *.class

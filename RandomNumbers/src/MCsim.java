@@ -4,7 +4,7 @@ public class MCsim {
 	
 	private double a = 0.;
 	private double b = 1.;
-	private double tau = 2.2;
+	private final double tau = 2.2;
 	private double[] distMax = new double[2];
 	
 	public MCsim(double a, double b) {
@@ -115,7 +115,7 @@ public class MCsim {
 	
 	public static void main(String[] args) {
 		
-		MCsim montecarlo = new MCsim(0, 15.);
+		MCsim montecarlo = new MCsim(0, 100.);
 		int nIterations = 1000;
 		montecarlo.writeToFile("mc_trial.txt", nIterations);
 		int nSets = 500;
