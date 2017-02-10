@@ -120,8 +120,12 @@ public class MCsim {
 		 * from simulations of n data points.
 		 */
 		double[][] tauish = new double[nSets][1];
-		for(int i=0; i<nSets; i++) 
+		double avgTau = 0.;
+		for(int i=0; i<nSets; i++){
 			tauish[i][0] = this.avgTau(n);
+		    avgTau += tauish[i][0] / (double)nSets;
+		}
+		System.out.println(avgTau + " " + 1./Math.sqrt(nSets));
 		return tauish;
 	}
 	
