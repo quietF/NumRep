@@ -12,7 +12,8 @@ public class MCsim {
 		this.b = b;
 		this.distMax = this.findFmax();
 	}
-	
+
+/*
 	public double integralInterval(double min, double max, int nPoints){
 		MCsim sub_montecarlo = new MCsim(min, max);
 		double top = 1.001 * sub_montecarlo.distMax[1];
@@ -38,6 +39,7 @@ public class MCsim {
 		
 		return ans;
 	}
+*/
 	
 	public double evaluateDist(double ti){
 		/*
@@ -46,11 +48,9 @@ public class MCsim {
 		 */
 		return Math.exp(- ti / tau) / tau;
 	}
-	
+
+/*	
 	public double[] findFmax(){
-		/*
-		 * Returns the max value of the function. (probably overkill)
-		 */
 		double fmax = this.evaluateDist(this.a), faux = fmax,
 				tmax = this.a;
 		int nIterations = 1000;
@@ -64,6 +64,7 @@ public class MCsim {
 		}
 		return new double[]{tmax, fmax};
 	}
+*/
 	
 	public double getRandBelow(){
 		/*
