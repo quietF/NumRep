@@ -125,10 +125,9 @@ public class MCsim {
 			tauish[i][0] = this.avgTau(n);
 		    avgTau += tauish[i][0] / (double)nSets;
 		}
-		for(int i=0; i<nSets; i++){
+		for(int i=0; i<nSets; i++)
 			sdTau += (avgTau-tauish[i][0])*(avgTau-tauish[i][0]);
-		}
-		System.out.println(avgTau + " " + Math.sqrt(sdTau/n)/Math.sqrt(nSets));
+		System.out.println(avgTau + " " + Math.sqrt(sdTau)/nSets);
 		return tauish;
 	}
 	
@@ -147,7 +146,7 @@ public class MCsim {
 	
 	public static void main(String[] args) {
 		
-		MCsim montecarlo = new MCsim(0, 100.);
+		MCsim montecarlo = new MCsim(0, 25.);
 		int nIterations = 1000;
 		montecarlo.writeToFile("mc_trial.txt", nIterations);
 		int nSets = 500;
