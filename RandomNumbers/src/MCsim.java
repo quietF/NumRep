@@ -49,7 +49,6 @@ public class MCsim {
 		return Math.exp(- ti / tau) / tau;
 	}
 
-/*	
 	public double[] findFmax(){
 		double fmax = this.evaluateDist(this.a), faux = fmax,
 				tmax = this.a;
@@ -64,7 +63,6 @@ public class MCsim {
 		}
 		return new double[]{tmax, fmax};
 	}
-*/
 	
 	public double getRandBelow(){
 		/*
@@ -111,8 +109,8 @@ public class MCsim {
 		 * will not correspond exactly to the input value of tau (2.2 ms).
 		 */
 		double avgTau = 0.;
-		for(int i=0; i<n; i++) avgTau += this.getRandBelow() / (double)n;
-		return avgTau;
+		for(int i=0; i<n; i++) avgTau += this.getRandBelow();
+		return avgTau / (double)n;
 	}
 	
 	public double[][] estimateTau(int nSets, int n){
@@ -122,11 +120,15 @@ public class MCsim {
 		 */
 		double[][] tauish = new double[nSets][1];
 		double avgTau = 0.;
+		double sdTau = 0.;
 		for(int i=0; i<nSets; i++){
 			tauish[i][0] = this.avgTau(n);
 		    avgTau += tauish[i][0] / (double)nSets;
 		}
-		System.out.println(avgTau + " " + 1./Math.sqrt(nSets));
+		for(int i=0; i<nSets; i++){
+			sdTau += (avgTau-tauish[i][0])*(avgTau-tauish[i][0]);
+		}
+		System.out.println(avgTau + " " + Math.sqrt(sdTau/n)/Math.sqrt(nSets));
 		return tauish;
 	}
 	
