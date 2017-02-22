@@ -26,20 +26,16 @@ public class Efield {
 		this.order = order;
 		dx = (x_max-x_min)/(double)n;
 	}
-
-	public double getChargeDensity(double x, double y){
-		if(x >= x_min){
-			if(x < 1 || x >=3) return 0.;
-			else if(x >= 1 && x < 2) return 1.;
-			else return -1.;
-		} else{
-			System.out.println(x + ": Only possitive input values <= 4.");
-		}
-		return 3.;
-	}
 	
 	public double getEuler(double ybefore, double xnow, double dx, Function fxy){
 		return ybefore + dx * fxy.evaluate(xnow-dx, ybefore);
+	}
+	
+	public double getEuler(double[][] E_or_V, int i, double dx, Function fxy){
+		if(fxy.getCharge())
+			return E_or_V[i-1][1] + dx * fxy.evaluate(E_or_V[i][0], E_or_V[i-1][1]);
+		else
+			return E_or_V[i-1][1] + dx * fxy.evaluate(i, i-1);
 	}
 	
 	public double getRK2(double ybefore, double xnow, double dx, Function fxy){
@@ -64,7 +60,8 @@ public class Efield {
 		if(order == 1){
 			for(int i=1; i<=n; i++){
 				x_Ex[i][0] = x_Ex[i-1][0] + dx;
-				x_Ex[i][1] = this.getEuler(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
+				x_Ex[i][1] = this.getEuler(x_Ex, i, dx, chargeDensity);
+				//x_Ex[i][1] = this.getEuler(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
 				x_Ex[i][2] = chargeDensity.evaluate(x_Ex[i][0], x_Ex[i][1]);
 			}
 		}else if(order == 2){

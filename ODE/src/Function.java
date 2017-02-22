@@ -1,7 +1,7 @@
 
 public class Function {
 	
-	private final double x_min = 0., x_max = 4.;
+	private final double x_min = 0.;//, x_max = 4.;
 	private int order = 1;
 	public double[][] x_Ex_rho;
 	public boolean charge;
@@ -17,6 +17,10 @@ public class Function {
 		x_Ex_rho = ElectricField.getElectricField();
 	}
 	
+	public boolean getCharge(){
+		return this.charge;
+	}
+	
 	public double evaluate(double x, double y){
 		if(x >= x_min){
 			if(x < 1 || x >=3) return 0.;
@@ -24,8 +28,8 @@ public class Function {
 			else return -1.;
 		} else{
 			System.out.println(x + ": Only possitive input values <= 4.");
+			return 3.;
 		}
-		return 3.;
 	}
 	
 	public double evaluate(int i_x, int i_y){
