@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import Jama.Matrix;
 
 public class Efield {
@@ -27,32 +25,41 @@ public class Efield {
 		dx = (x_max-x_min)/(double)n;
 	}
 	
-	public double getEuler(double ybefore, double xnow, double dx, Function fxy){
-		return ybefore + dx * fxy.evaluate(xnow-dx, ybefore);
-	}
-	
 	public double getEuler(double[][] E_or_V, int i, double dx, Function fxy){
 		if(fxy.getCharge())
-			return E_or_V[i-1][1] + dx * fxy.evaluate(E_or_V[i][0], E_or_V[i-1][1]);
+			return E_or_V[i-1][1] + dx * fxy.evaluate(E_or_V[i-1][0], E_or_V[i][1]);
 		else
-			return E_or_V[i-1][1] + dx * fxy.evaluate(i, i-1);
+			return E_or_V[i-1][1] + dx * fxy.evaluate(2*i);
 	}
 	
-	public double getRK2(double ybefore, double xnow, double dx, Function fxy){
-		double ymid = ybefore + dx * fxy.evaluate(xnow-dx, ybefore);
-		return ybefore + dx * fxy.evaluate(xnow-dx/2, ymid);
+	public double getRK2(double[][] E_or_V, int i, double dx, Function fxy){
+		if(fxy.getCharge()){
+			double ymid = E_or_V[i-1][1] + dx * fxy.evaluate(E_or_V[i-1][0], E_or_V[i][1]);
+			return E_or_V[i-1][1] + dx * fxy.evaluate(E_or_V[i][0]-dx/2., ymid);
+		}
+		else{
+			return E_or_V[i-1][1] + dx * fxy.evaluate(2*i - 1);
+		}
 	}
 	
-	public double getRK4(double ybefore,double xnow, double dx, Function fxy){
-		double k1 = fxy.evaluate(xnow - dx, ybefore);
-		double k2 = fxy.evaluate(xnow - dx/2, ybefore + dx*k1/2.);
-		double k3 = fxy.evaluate(xnow - dx/2, ybefore + dx*k2/2.);
-		double k4 = fxy.evaluate(xnow, ybefore + dx*k3/2.);
-		return ybefore + dx * (k1 + 2. * k2 + 2. * k3 + k4)/(double)6;
+	public double getRK4(double[][] E_or_V, int i, double dx, Function fxy){
+		if(fxy.getCharge()){
+			double k1 = fxy.evaluate(E_or_V[i][0]-dx, E_or_V[i][1]);
+			double k2 = fxy.evaluate(E_or_V[i][0]-dx/2., E_or_V[i][1]+dx*k1/2.);
+			double k3 = fxy.evaluate(E_or_V[i][0]-dx/2., E_or_V[i][1]+dx*k2/2.);
+			double k4 = fxy.evaluate(E_or_V[i][0], E_or_V[i][1]+dx*k3/2.);
+			return E_or_V[i-1][1] + dx * (k1+2.*k2+2.*k3+k4)/6.;
+		} else{
+			double k1 = fxy.evaluate(2*(i-1));
+			double k2 = fxy.evaluate(2*i - 1);
+			double k3 = fxy.evaluate(2*i - 1);
+			double k4 = fxy.evaluate(2*i);
+			return E_or_V[i-1][1] + dx * (k1+2.*k2+2.*k3+k4)/6.;
+		}
 	}
 	
 	public double[][] getElectricField(){
-		double[][] x_Ex = new double[n+1][3];
+		double[][] x_Ex = new double[n+1][4];
 		Function chargeDensity = new Function();
 		x_Ex[0][0] = x_min;
 		x_Ex[0][1] = Ex0;
@@ -61,20 +68,24 @@ public class Efield {
 			for(int i=1; i<=n; i++){
 				x_Ex[i][0] = x_Ex[i-1][0] + dx;
 				x_Ex[i][1] = this.getEuler(x_Ex, i, dx, chargeDensity);
-				//x_Ex[i][1] = this.getEuler(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
 				x_Ex[i][2] = chargeDensity.evaluate(x_Ex[i][0], x_Ex[i][1]);
+				x_Ex[i][3] = Math.abs(Math.abs(x_Ex[i][1])-Math.abs(chargeDensity.getAnalytic(x_Ex[i][0], true)));
 			}
 		}else if(order == 2){
 			for(int i=1; i<=n; i++){
 				x_Ex[i][0] = x_Ex[i-1][0] + dx;
-				x_Ex[i][1] = this.getRK2(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
+				x_Ex[i][1] = this.getRK2(x_Ex, i, dx, chargeDensity);
+				//x_Ex[i][1] = this.getRK2(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
 				x_Ex[i][2] = chargeDensity.evaluate(x_Ex[i][0], x_Ex[i][1]);
+				x_Ex[i][3] = Math.abs(Math.abs(x_Ex[i][1])-Math.abs(chargeDensity.getAnalytic(x_Ex[i][0], true)));
 			}
 		}else if(order == 4){
 			for(int i=1; i<=n; i++){
 				x_Ex[i][0] = x_Ex[i-1][0] + dx;
-				x_Ex[i][1] = this.getRK4(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
+				x_Ex[i][1] = this.getRK4(x_Ex, i, dx, chargeDensity);
+				//x_Ex[i][1] = this.getRK4(x_Ex[i-1][1], x_Ex[i][0], dx, chargeDensity);
 				x_Ex[i][2] = chargeDensity.evaluate(x_Ex[i][0], x_Ex[i][1]);
+				x_Ex[i][3] = Math.abs(Math.abs(x_Ex[i][1])-Math.abs(chargeDensity.getAnalytic(x_Ex[i][0], true)));
 			}
 		}
 		return x_Ex;
@@ -87,38 +98,52 @@ public class Efield {
 		fw.writeFile(outFile, x_E_rho);
 	}
 	
-	public double[][] getElectricPotential(int order, String outFile){
-		double[][] x_Vx = new double[n+1][2];
+	public double[][] getElectricPotential(){
+		double[][] x_Vx = new double[n+1][3];
 		Function electricField = new Function(this.n, this.order);
 		x_Vx[0][0] = x_min;
 		x_Vx[0][1] = Vx0;
 		if(order == 1){
 			for(int i=1; i<=n; i++){
 				x_Vx[i][0] = x_Vx[i-1][0] + dx;
-				x_Vx[i][1] = this.getEuler(x_Vx[i-1][1], x_Vx[i][0], dx, electricField);
+				x_Vx[i][1] = this.getEuler(x_Vx, i, dx, electricField);
+				x_Vx[i][2] = Math.abs(Math.abs(x_Vx[i][1])-Math.abs(electricField.getAnalytic(x_Vx[i][0], false)));
 			}
 		}else if(order == 2){
 			for(int i=1; i<=n; i++){
 				x_Vx[i][0] = x_Vx[i-1][0] + dx;
-				x_Vx[i][1] = this.getRK2(x_Vx[i-1][1], x_Vx[i][0], dx, electricField);
+				x_Vx[i][1] = this.getRK2(x_Vx, i, dx, electricField);
+				x_Vx[i][2] = Math.abs(Math.abs(x_Vx[i][1])-Math.abs(electricField.getAnalytic(x_Vx[i][0], false)));
 			}
 		}else if(order == 4){
 			for(int i=1; i<=n; i++){
 				x_Vx[i][0] = x_Vx[i-1][0] + dx;
-				x_Vx[i][1] = this.getRK4(x_Vx[i-1][1], x_Vx[i][0], dx, electricField);
+				x_Vx[i][1] = this.getRK4(x_Vx, i, dx, electricField);
+				x_Vx[i][2] = Math.abs(Math.abs(x_Vx[i][1])-Math.abs(electricField.getAnalytic(x_Vx[i][0], false)));
 			}
 		}
 		return x_Vx;
 	}
 	
+	public void writeElectricPotential(String outFile){
+		MyFileWriter fw = new MyFileWriter();
+		double[][] x_Vx = this.getElectricPotential();
+		Matrix x_V = new Matrix(x_Vx);
+		fw.writeFile(outFile, x_V);
+	}
+	
 	public static void main(String[] args){
 		System.out.println("HOLA");
-		Efield Euler = new Efield(16, 1);
+		int n = 47;
+		Efield Euler = new Efield(n, 1);
 		Euler.writeElectricField("eulerEfield.dat");
-		Efield RK2 = new Efield(16, 2);
+		Euler.writeElectricPotential("eulerEpotential.dat");
+		Efield RK2 = new Efield(n, 2);
 		RK2.writeElectricField("rk2Efield.dat");
-		Efield RK4 = new Efield(16, 4);
+		RK2.writeElectricPotential("rk2Epotential.dat");
+		Efield RK4 = new Efield(n, 4);
 		RK4.writeElectricField("rk4Efield.dat");
+		RK4.writeElectricPotential("rk4Epotential.dat");
 	}
 
 }
