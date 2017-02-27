@@ -1,0 +1,2 @@
+reset;
+ p[-1:4] cos(x)*sin(3*x) t "h(x)", 0 lc rgb 'black' t "";

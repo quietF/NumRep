@@ -134,7 +134,7 @@ public class Efield {
 	
 	public static void main(String[] args){
 		System.out.println("HOLA");
-		int n = 47;
+		int n = 256;
 		Efield Euler = new Efield(n, 1);
 		Euler.writeElectricField("eulerEfield.dat");
 		Euler.writeElectricPotential("eulerEpotential.dat");
@@ -144,6 +144,7 @@ public class Efield {
 		Efield RK4 = new Efield(n, 4);
 		RK4.writeElectricField("rk4Efield.dat");
 		RK4.writeElectricPotential("rk4Epotential.dat");
+		System.out.println("ADIOS");
 	}
 
 }
