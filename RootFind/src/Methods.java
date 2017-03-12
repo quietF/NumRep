@@ -72,6 +72,7 @@ public class Methods {
 	        x=x0+i*dx;
 	        if(f_g_h.evaluate(x)*f_g_h.evaluate(x+dx)<=0.){
 	            rootRange.add(new ArrayList<Double>(Arrays.asList(x, x+dx)));
+				System.out.println("Root found in range: " + x + ", " + (x+dx));
 	            j+=1;
 	        }
 	    }
@@ -94,7 +95,7 @@ public class Methods {
 		}
 		return root;
 	}
-	
+
 	public double findRoot_NR() throws Exception{
 	    
 	    double dx = Math.abs(this.x1-this.x0)/10000., x0_aux = x0, x1_aux = x1;
@@ -187,26 +188,76 @@ public class Methods {
 	    
 	    return roots;
 	}
-	
-	public double findRoot_SandB(){
-	    double root=0.;
-	    try{
-	        root = this.findRoot_S();
-	    } catch(Exception e){
-	        System.out.println(e2.getMessage());
-	        root = this.findRoot_B();
-	    }
+		
+	public double step_B(){
+		++steps;
+		xb = (x1+x0)/2.;
+		if(this.foundRoot(xb)) return xb;
+		if(this.goodBoundaries(x0, xb)){
+			x1 = xb;
+			return xb;
+		} else if(this.goodBoundaries(xb, x1)){
+			x0 = xb;
+			return xb;
+		} else return 10000.;
+	}
+
+	public double step_NR() throws Exception{
+		++steps;
+		double dx = Math.abs(x1-x0)/10000.;
+		double slope = (f_g_h.evaluate(x0+dx)-f_g_h.evaluate(x0))/dx;
+		xb = x0-f_g_h.evaluate(x0)/slope;
+		if(xb > x1 || xb < x0) throw e1;
+		else if(this.goodBoundaries(x0, xb)){ 
+            x1 = xb;
+            return xb;
+        } else if(this.goodBoundaries(xb, x1)){ 
+            x1 = xb;
+            return xb;
+        } else return 100000.;
+	}
+
+	public double step_S() throws Exception{
+		++steps;
+		double secant_slope = (f_g_h.evaluate(x1)-f_g_h.evaluate(x0))/(x1-x0);
+		xb = x0-f_g_h.evaluate(x0)/secant_slope;
+		if(xb > x1 || xb < x0) throw e1;
+		else if(this.foundRoot(xb)) return xb;
+		else if(this.goodBoundaries(x0, xb)){ 
+			x1 = xb;
+			return xb;
+		} else if(this.goodBoundaries(xb, x1)){ 
+			x1 = xb;
+			return xb;
+        } else return 100000.;
+	}
+
+	public double HfindRoot_SandB(){
+	    double root=xb;
+		while(!this.foundRoot(root)){
+			try{
+				root = this.step_S();
+			} catch(Exception e){
+				System.out.println(e2.getMessage());
+				root = this.step_B();
+			}
+			System.out.println(root);
+		}
+		System.out.println(steps);
 	    return root;
 	}
 	
-	public double findRoot_NRandB(){
-	    double root=0.;
-	    try{
-	        root = this.findRoot_NR();
-	    } catch(Exception e){
-	        System.out.println(e1.getMessage());
-	        root = this.findRoot_B();
-	    }
+	public double HfindRoot_NRandB(){
+	    double root=xb;
+		while(!this.foundRoot(root)){
+			try{
+				root = this.step_NR();
+			} catch(Exception e){
+				System.out.println(e1.getMessage());
+				root = this.step_B();
+			}
+		}
+		System.out.println(steps);
 	    return root;
 	}
 	
@@ -216,8 +267,9 @@ public class Methods {
 		char f = choose.next().charAt(0);
 		Function f_x = new Function(f);
 		Methods bisection = new Methods(f_x, choose);
-		double[][] roots = bisection.findAllRoots();
-		//System.out.println("Root found!: " + root + " in " + bisection.steps + " steps.");   
+		//double[][] roots = bisection.findAllRoots();
+		double Hroot = bisection.HfindRoot_SandB();
+		System.out.println(Hroot);
 	}
 	
 
