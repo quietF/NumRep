@@ -59,14 +59,14 @@ public class Methods {
 	}
 	
 	public boolean foundRoot(double x){
-		if(Math.abs(f_g_h.evaluate(x))<=zeroish)
+		if(Math.abs(this.x1-this.x0)<=zeroish)  //(Math.abs(f_g_h.evaluate(x))<=zeroish)
 			return true;
 		else return false;
 	}
 	
 	public ArrayList<ArrayList<Double>> findRootRanges(){
 	    ArrayList<ArrayList<Double>> rootRange = new ArrayList<ArrayList<Double>>();
-	    int N = 10, j=0;
+	    int N = 9, j=0;
 	    double dx = (x1-x0)/N, x=x0;
 	    for(int i=0; i<N; i++){
 	        x=x0+i*dx;
@@ -80,7 +80,7 @@ public class Methods {
 	}
 	
 	public double findRoot_B(){
-	    this.steps += 1;
+	    	this.steps += 1;
 		this.xb = (x1+x0)/2.;
 		double root = 0.;
 		if(this.foundRoot(xb)) return xb;
@@ -145,7 +145,7 @@ public class Methods {
 	      else{
 		if(this.goodBoundaries(xb, x1)) this.x0 = xb;
 		else this.x1 = xb;
-		root = this.findRoot_NR();
+		root = this.findRoot_S();
 	      }
 	    }
 	    return root;
@@ -155,7 +155,7 @@ public class Methods {
 	
 	    ArrayList<ArrayList<Double>> rootRanges = this.findRootRanges();
 	    ArrayList<Double> range = new ArrayList<Double>();
-	    double[][] roots = new double[rootRanges.size()][6];
+	    double[][] roots = new double[rootRanges.size()][8];
 	    
 	    for(int i=0; i<rootRanges.size(); i++){
 	        range = rootRanges.get(i);
@@ -180,8 +180,10 @@ public class Methods {
 		  System.out.println(e2.getMessage());
 		}
 		
-		
-		
+		roots[i][6] = this.HfindRoot_NRandB();
+		roots[i][7] = this.steps;
+		System.out.println("Root found at " + roots[i][6] + " with " + roots[i][7] + " steps, using hybrid NR+B method.");		
+
 		this.steps = 0;
 	    }
 	    
@@ -208,13 +210,10 @@ public class Methods {
 		double slope = (f_g_h.evaluate(x0+dx)-f_g_h.evaluate(x0))/dx;
 		xb = x0-f_g_h.evaluate(x0)/slope;
 		if(xb > x1 || xb < x0) throw e1;
-		else if(this.goodBoundaries(x0, xb)){ 
-            x1 = xb;
-            return xb;
-        } else if(this.goodBoundaries(xb, x1)){ 
-            x1 = xb;
-            return xb;
-        } else return 100000.;
+		else{
+			if(this.goodBoundaries(x0, xb)){x1 = xb; return xb;}
+			else{x0 = xb; return xb;}
+		}
 	}
 
 	public double step_S() throws Exception{
@@ -229,7 +228,7 @@ public class Methods {
 		} else if(this.goodBoundaries(xb, x1)){ 
 			x1 = xb;
 			return xb;
-        } else return 100000.;
+        	} else return 100000.;
 	}
 
 	public double HfindRoot_SandB(){
@@ -237,8 +236,9 @@ public class Methods {
 		while(!this.foundRoot(root)){
 			try{
 				root = this.step_S();
+				System.out.println("a");
 			} catch(Exception e){
-				System.out.println(e2.getMessage());
+				root = this.step_B();
 				root = this.step_B();
 			}
 			System.out.println(root);
@@ -248,17 +248,23 @@ public class Methods {
 	}
 	
 	public double HfindRoot_NRandB(){
-	    double root=xb;
+	    	double root=xb;
+		this.steps = 0;
 		while(!this.foundRoot(root)){
 			try{
 				root = this.step_NR();
+				this.steps+=1;
+				//System.out.println(root);
 			} catch(Exception e){
-				System.out.println(e1.getMessage());
+				System.out.println("NR didn't work");
 				root = this.step_B();
+				root = this.step_B();
+				root = this.step_B();
+				this.steps+=3;
 			}
 		}
-		System.out.println(steps);
-	    return root;
+		//System.out.println(steps);
+	    	return root;
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -267,9 +273,15 @@ public class Methods {
 		char f = choose.next().charAt(0);
 		Function f_x = new Function(f);
 		Methods bisection = new Methods(f_x, choose);
-		//double[][] roots = bisection.findAllRoots();
-		double Hroot = bisection.HfindRoot_SandB();
-		System.out.println(Hroot);
+		double[][] roots = bisection.findAllRoots();
+		/*
+		System.out.printf("Choose method: bisection (b), NewtonRaphson (n), Secant (s) or Hybrid NR+B (h)");
+		char method = choose.next().charAt(0);
+		if(method=='b') System.out.println(bisection.findRoot_B() + " " + bisection.steps);
+		else if(method=='n') System.out.println(bisection.findRoot_NR() + " " + bisection.steps);
+                else if(method=='s') System.out.println(bisection.findRoot_S() + " " + bisection.steps);
+                else if(method=='h') System.out.println(bisection.HfindRoot_NRandB() + " " + bisection.steps);
+		*/
 	}
 	
 
