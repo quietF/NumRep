@@ -23,12 +23,10 @@ The field of digital image processing aims to modify images through the use of m
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{img/desync2}
+\includegraphics[width=0.5\textwidth]{img/desync1}
 \caption{Randomly shifted horizontal lines.}
 \label{fig.1}
 \end{figure}
-
-Through the use of various mathematical methods it is possible to find the degree to which each horizontal line has been shifted. This is done through the use of Discrete Fourier Transforms of each horizontal line. A comparison between each line and the one directly above it is performed in order to determine by how many pixels the image has been shifted. 
 
 
 \end{document}

@@ -50,14 +50,15 @@ class Image(object):
     def get_threshold(self):
 
         aux_image = Image(fileName=self.fileName)
-        self.zero_xcorrelation_max = np.zeros(aux_image.rows)
-        self.xcorrelation_max = np.zeros(aux_image.rows)
-        self.autoxcorrelation_max = np.zeros(aux_image.rows)
+        self.zero_xcorrelation_max = np.zeros(aux_image.cols)
+        self.xcorrelation_max = np.zeros(aux_image.cols)
+        self.autoxcorrelation_max = np.zeros(aux_image.cols)
+        shifted_lines = 0
 
         for i in range(1, aux_image.cols):
 
-            xcorrelation = aux_image.get_cross_correlation(i)
-            autoxcorrelation = aux_image.get_self_cross_correlation(i)
+            xcorrelation = self.get_cross_correlation(i)
+            autoxcorrelation = self.get_self_cross_correlation(i)
             xc_argmax = int(np.argmax(xcorrelation))
             self.xcorrelation_max[i] = xcorrelation[xc_argmax]
             self.autoxcorrelation_max[i] = np.max(autoxcorrelation)
@@ -66,8 +67,10 @@ class Image(object):
                 self.zero_xcorrelation_max[i] = xcorrelation[xc_argmax]
 
             if (xc_argmax != 0):# & (self.xcorrelation_max[i] > self.autoxcorrelation_max[i]):
+                shifted_lines+=1
                 aux_image.image[i] = np.roll(aux_image.image[i], xc_argmax)
 
+        print(shifted_lines)
         plt.subplot(121), plt.imshow(aux_image.image, cmap=plt.cm.gray)
         plt.subplot(122), plt.imshow(self.image, cmap=plt.cm.gray)
         plt.show()
