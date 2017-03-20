@@ -13,10 +13,6 @@ class Image(object):
     cols = 0
     rows = 0
 
-    avg_xcorrelation_maxs_difference = 0.
-    avg_zero_xcorrelation_maxs_difference = 0.
-    avg_nonzero_xcorrelation_maxs_difference = 0.
-
     def __init__(self, fileName):
 
         self.fileName = str(fileName)
@@ -24,17 +20,20 @@ class Image(object):
         self.cols = len(self.image)
         self.rows = len(self.image[0])
 
-    def get_cross_correlation(self, line_number):
+    def get_xcorrelation(self, line_number):
         '''
-        :param image: np.array(rows, cols) of uint8 type
         :param line_number: int from 1 to rows
         :return: cross correlation between line #line_number and line #line_number-1
         '''
-        compared_line = np.fft.fft(self.image[line_number])
-        base_line = np.fft.fft(np.roll(self.image, 1, axis=0)[line_number])
-        cross_correlation = np.fft.ifft(np.multiply(base_line, np.conjugate(compared_line)))
 
-        return cross_correlation.real
+        base_line = np.fft.fft(self.image[line_number])
+        base_line[:] = (base_line[:]-np.average(base_line))/(np.std(base_line))
+        compared_line = np.fft.fft(np.roll(self.image, 1, axis=0)[line_number])
+        compared_line[:] = (compared_line[:] - np.average(compared_line)) / (np.std(compared_line))
+        xcorrelation = np.fft.ifft(np.multiply(base_line, np.conjugate(compared_line)))
+
+        return xcorrelation.real
+
 
     def get_self_cross_correlation(self, line_number):
         '''
@@ -53,31 +52,35 @@ class Image(object):
         self.zero_xcorrelation_max = np.zeros(aux_image.cols)
         self.xcorrelation_max = np.zeros(aux_image.cols)
         self.autoxcorrelation_max = np.zeros(aux_image.cols)
+
+        self.xcorrelation_diff = np.zeros(aux_image.cols)
         shifted_lines = 0
 
         for i in range(1, aux_image.cols):
 
-            xcorrelation = self.get_cross_correlation(i)
+            xcorrelation = self.get_xcorrelation(i)
             autoxcorrelation = self.get_self_cross_correlation(i)
             xc_argmax = int(np.argmax(xcorrelation))
             self.xcorrelation_max[i] = xcorrelation[xc_argmax]
             self.autoxcorrelation_max[i] = np.max(autoxcorrelation)
 
+            self.xcorrelation_diff[i] = np.abs(self.xcorrelation_max[i] - self.autoxcorrelation_max[i])
+
             if xc_argmax == 0:
                 self.zero_xcorrelation_max[i] = xcorrelation[xc_argmax]
 
-            if (xc_argmax != 0):# & (self.xcorrelation_max[i] > self.autoxcorrelation_max[i]):
+            if (xc_argmax != 0):
                 shifted_lines+=1
-                aux_image.image[i] = np.roll(aux_image.image[i], xc_argmax)
+                #aux_image.image[i] = np.roll(aux_image.image[i], -xc_argmax)
 
         print(shifted_lines)
-        plt.subplot(121), plt.imshow(aux_image.image, cmap=plt.cm.gray)
-        plt.subplot(122), plt.imshow(self.image, cmap=plt.cm.gray)
-        plt.show()
-        plt.close()
 
-        x = np.arange(aux_image.rows)
-        plt.plot(x, self.xcorrelation_max, 'r', self.zero_xcorrelation_max, 'b', x, self.autoxcorrelation_max, 'g')
+        #self.xcorrelation_diff /= np.max(self.xcorrelation_diff)
+        self.avg_xcorrelation_maxs_difference = np.average(self.xcorrelation_diff)
+
+
+        x = np.arange(aux_image.cols)
+        plt.plot(x, self.xcorrelation_diff, 'r', x, np.full((aux_image.cols), self.avg_xcorrelation_maxs_difference), 'b')
         plt.show()
 
     """
@@ -94,19 +97,38 @@ class Image(object):
         plt.show()
     """
 
+    def shift(self):
+
+        xcorrelation_max = np.zeros(self.cols)
+        shift = np.zeros(self.cols, dtype=int)
+
+        for i in range(1, self.cols):
+
+            xcorrelation = self.get_xcorrelation(i)
+            shift[i] = (int)(np.argmax(xcorrelation))
+            xcorrelation_max[i] = xcorrelation[shift[i]]
+
+            #if (shift[i]!=shift[i-1]) & (xcorrelation_max[i]<0.995) & (xcorrelation_max[i]>0.8): # perfect for desync4.pgm
+            if (shift[i] != shift[i - 1]) & (xcorrelation_max[i] < 0.995) & (xcorrelation_max[i] > 0.9):
+                self.image[i] = np.roll(self.image[i], -shift[i])
+
+        x=np.arange(self.cols)
+        plt.plot(x, xcorrelation_max*np.max(shift), 'b', x, shift, 'r')
+        plt.show()
+
     def shift_image(self, threshold_percentage):
 
         image_out = Image(self.fileName)
+        self.get_threshold()
         shifted_lines = 0
 
         for i1 in range(1, self.cols):
 
-            xcorrelation = self.get_cross_correlation(i1)
+            xcorrelation = self.get_xcorrelation(i1)
             xcorrelation_self = self.get_self_cross_correlation(i1)
             maxs_xcorrelation_diff = np.abs(np.max(xcorrelation)-np.max(xcorrelation_self))
             xcorrelation_shift = (int)(np.argmax(xcorrelation))
-            if (xcorrelation_shift != 0) & (
-                            self.avg_xcorrelation_maxs_difference * threshold_percentage < maxs_xcorrelation_diff):
+            if (xcorrelation_shift != 0) & (maxs_xcorrelation_diff > threshold_percentage*self.avg_xcorrelation_maxs_difference):
                 self.image[i1] = np.roll(self.image[i1], xcorrelation_shift)
                 shifted_lines += 1
 
@@ -118,7 +140,7 @@ class Image(object):
 
         for i1 in range(1, self.cols):
 
-            cross_correlation_argmax = np.argmax(self.get_cross_correlation(i1)).astype(int)
+            cross_correlation_argmax = np.argmax(self.get_xcorrelation(i1)).astype(int)
 
             if cross_correlation_argmax != 0:
                 # image_out[i1] = np.roll(image_in, -1, axis=0)[i1]
