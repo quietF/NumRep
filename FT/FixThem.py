@@ -13,8 +13,7 @@ im = Image(fn)
 
 im.shift()
 
-im.clean_up(30)
+#im.clean_up()
 im.show_image()
-
 
 #im.show_image()

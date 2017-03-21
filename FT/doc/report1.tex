@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 %\documentclass[a4paper,10pt]{scrartcl}
 
+\usepackage[margin=1.0in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 
@@ -14,21 +15,28 @@
 \maketitle
 
 \begin{abstract}
- This report outlines a proposed procedure for synchronising lines of an image that has been corrupted by randomly shifting horizontal lines. The method involves the use of discrete fourier transforms of each line in the given image to determine to what degree each of them was shifted. The end result of the procedure is an image that has been reconstructed to an almost perfect extent.
+ This report outlines a proposed procedure for synchronising lines of an image that has been corrupted by randomly shifting horizontal lines. The method involves the use of discrete fourier transforms of each line in the given image to determine to what degree each of them was shifted. The end result of the procedure is an image that has been reconstructed to an almost perfect extent, with the edges of the output images being the most notorious unfixed problem.
 \end{abstract}
 
 \section{Introduction}
 
-The field of digital image processing aims to modify images through the use of mathematical operations. This is done by considering images as two dimensional objects and applying signal processing techniques to them in order to manipulate them. This work describes an algorithm used to fix images that have had certain horizontal lines randomly shifted. The algorithm receives as input a corrupted image in file format \texttt{.pgm} (Portable Graymap). The input image has to have a number of horizontal lines that have been shifted by a random number of pixels, for example fig.~\ref{fig.1}
+The field of digital image processing aims to modify images through the use of various mathematical operations. This is done by considering images as two dimensional objects and applying signal processing techniques to them in order to manipulate them~\cite{gonzalez1992digital}. This work describes an algorithm written to synchronise that have had certain horizontal lines randomly shifted. The algorithm receives as input a corrupted image in file format \texttt{.pgm} (Portable Graymap). The input image has to have a number of horizontal lines that have been shifted by a random number of pixels, for example fig.~\ref{fig.1}.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{img/desync2}
+\includegraphics[width=0.9\textwidth]{img/desync2}
 \caption{Randomly shifted horizontal lines.}
 \label{fig.1}
 \end{figure}
 
-Through the use of various mathematical methods it is possible to find the degree to which each horizontal line has been shifted. This is done through the use of Discrete Fourier Transforms of each horizontal line. A comparison between each line and the one directly above it is performed in order to determine by how many pixels the image has been shifted. 
+The algorithm used to attempt to synchronise the horizontal lines of the given images was written in Python3.5, and imports the libraries \texttt{matplotlib.pyplot} for saving the output, fixed, image, \texttt{misc} from \texttt{scipy} to read the \texttt{.pgm} input files, and \texttt{numpy} since it allows for the use of Discrete Fourier Transforms (which are a fundamental component of the algorithm). The code is available in the public \texttt{github} repository under the following url: \texttt{https://github.com/quietF/NumRep} on the folder \texttt{FT}.
 
+Through the use of various mathematical methods it is possible to find the degree to which each horizontal line has been shifted. The method described, and used, relies on a very strong assumption - vertically adjacent lines can be considered as being approximately equal. The imperfection of the code can be traced back to the assumption not always being true. If two horizontal lines are equal, then their cross correlation would return the degree by which these are shifted. 
+
+This is done by obtaining the Discrete Fourier Transform (DFT) of each horizontal line. Subsequently, the DFT of each line is cross correlated to the DFT of the line directly above. The result of each cross correlation tells whether the line below is shifted relative to the line above.  A comparison with the DFT of the line directly above helps determine whether a shift has occurred.  through the use of Discrete Fourier Transforms of each horizontal line. A comparison between each line and the one directly above it is performed in order to determine by how many pixels the image has been shifted. 
+
+
+\bibliographystyle{unsrt}
+\bibliography{report1}
 
 \end{document}
