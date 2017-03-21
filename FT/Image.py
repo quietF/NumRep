@@ -109,10 +109,11 @@ class Image(object):
             xcorrelation_max[i] = xcorrelation[shift[i]]
 
             #if (shift[i]!=shift[i-1]) & (xcorrelation_max[i]<0.995) & (xcorrelation_max[i]>0.8): # perfect for desync4.pgm
-            if (shift[i] != shift[i - 1]) & (xcorrelation_max[i] < 0.995) & (xcorrelation_max[i] > 0.9):
+            if (shift[i] != shift[i - 1]) & (xcorrelation_max[i] < 0.995) & (xcorrelation_max[i] > 0.8):
                 self.image[i] = np.roll(self.image[i], -shift[i])
 
         x=np.arange(self.cols)
+        print(np.min(xcorrelation_max[1:]))
         plt.plot(x, xcorrelation_max*np.max(shift), 'b', x, shift, 'r')
         plt.show()
 
@@ -138,12 +139,12 @@ class Image(object):
 
         cleaned_lines = 0
 
-        for i1 in range(1, self.cols):
+        for i1 in range(1, self.cols-1):
 
-            cross_correlation_argmax = np.argmax(self.get_xcorrelation(i1)).astype(int)
+            xcorrelation_argmax = np.argmax(self.get_xcorrelation(i1)).astype(int)
 
-            if cross_correlation_argmax != 0:
-                # image_out[i1] = np.roll(image_in, -1, axis=0)[i1]
+            if xcorrelation_argmax != 0:
+
                 self.image[i1][:pixels] = np.roll(self.image, -1, axis=0)[i1][:pixels]
                 self.image[i1][self.rows - pixels:] = np.roll(self.image, -1, axis=0)[i1][self.rows - pixels]
                 cleaned_lines += 1
