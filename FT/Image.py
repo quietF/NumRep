@@ -49,9 +49,12 @@ class Image(object):
             shift[i] = (int)(np.argmax(xcorrelation))
             xcorrelation_max[i] = xcorrelation[shift[i]]
 
-            #if (shift[i]!=shift[i-1]) & (xcorrelation_max[i]<0.995) & (xcorrelation_max[i]>0.8): # perfect for desync4.pgm
             if (shift[i]!=0) & (shift[i] != shift[i - 1]) & \
                     (xcorrelation_max[i] < self.threshold_top) & (xcorrelation_max[i] > self.threshold_bottom):
+                """
+                If the shift is non zero, and different from the previous shift (to avoid bulk shifting),
+                there will be a shift provided the cross correlation maximum is within an appropriate range.
+                """
                 self.image[i] = np.roll(self.image[i], -shift[i])
 
         x=np.arange(self.cols)
@@ -75,9 +78,12 @@ class Image(object):
                 self.image[i1] = np.roll(self.image, 1, axis=0)[i1]
                 cleaned_lines += 1
 
-        print(cleaned_lines)
-
     def show_image(self):
 
         plt.imshow(self.image, cmap=plt.cm.gray)
         plt.show()
+
+    def save_image(self):
+
+        out_image = str("img_out/" + input("Output image name : "))
+        misc.imsave(out_image, self.image)
