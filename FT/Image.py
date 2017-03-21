@@ -1,34 +1,34 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import misc
+import os
 
 
 class Image(object):
-    '''
-    Class to fix a .pgm image with randomly shifted lines.
+    """
+     Class to fix a .pgm image with randomly shifted lines.
     :param fileName is the path to a .pgm file
-    '''
+    """
 
     image = 0.
     cols = 0
     rows = 0
 
-    threshold_top = 0.995
-    threshold_bottom = 0.8
+    threshold_top = 0.995 # Maximum value of normalised cross correlation to consider shifting.
+    threshold_bottom = 0.8 # Minimum value of normalised cross correlation to consider shifting.
 
     def __init__(self, fileName):
 
         self.fileName = str(fileName)
         self.image = misc.imread(self.fileName)
-        #self.image = np.pad(self.image, [(0, 0), (50, 50)], mode='constant')
         self.cols = len(self.image)
         self.rows = len(self.image[0])
 
     def get_xcorrelation(self, line_number):
-        '''
+        """
         :param line_number: int from 1 to rows
-        :return: cross correlation between line #line_number and line #line_number-1
-        '''
+        :return: real part of cross correlation between line #line_number and line #line_number-1
+        """
 
         base_line = np.fft.fft(self.image[line_number])
         base_line[:] = (base_line[:]-np.average(base_line))/(np.std(base_line))
@@ -57,11 +57,6 @@ class Image(object):
                 """
                 self.image[i] = np.roll(self.image[i], -shift[i])
 
-        x=np.arange(self.cols)
-        print(np.min(xcorrelation_max[1:]))
-        plt.plot(x, xcorrelation_max*np.max(shift), 'b', x, shift, 'r')
-        plt.show()
-
     def clean_up(self):
 
         cleaned_lines = 0
@@ -81,9 +76,9 @@ class Image(object):
     def show_image(self):
 
         plt.imshow(self.image, cmap=plt.cm.gray)
-        plt.show()
+        plt.show(block=False)
 
     def save_image(self):
 
-        out_image = str("img_out/" + input("Output image name : "))
+        out_image = str("img_out/" + input("Output image name (just name, not the path) : "))
         misc.imsave(out_image, self.image)
