@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48826887-b36d-415d-8a58-5832bd51bb29" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/img/desync1.pgm" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doc/img/desync2.pgm" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.pdf" afterPath="$PROJECT_DIR$/doc/report1.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Image.py" afterPath="$PROJECT_DIR$/Image.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.aux" afterPath="$PROJECT_DIR$/doc/report1.aux" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.bbl" afterPath="$PROJECT_DIR$/doc/report1.bbl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.bib" afterPath="$PROJECT_DIR$/doc/report1.bib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.blg" afterPath="$PROJECT_DIR$/doc/report1.blg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.log" afterPath="$PROJECT_DIR$/doc/report1.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.tex" afterPath="$PROJECT_DIR$/doc/report1.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.tex.backup" afterPath="$PROJECT_DIR$/doc/report1.tex.backup" />
@@ -20,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FT$FixThem.coverage" NAME="FixThem Coverage Results" MODIFIED="1490182351732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FT$FixThem.coverage" NAME="FixThem Coverage Results" MODIFIED="1490194604300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FT$ShiftIt.coverage" NAME="ShiftIt Coverage Results" MODIFIED="1490003686561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FT$shortFix.coverage" NAME="shortFix Coverage Results" MODIFIED="1490003568825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FT$Image.coverage" NAME="Image Coverage Results" MODIFIED="1490003560058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -35,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Image.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Image.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="80" column="25" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+            <state relative-caret-position="311">
+              <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -47,7 +52,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FixThem.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FixThem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FixThem.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
@@ -551,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490131575037</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Handling image output with &quot;import os&quot;">
+      <created>1490182408750</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1490182408751</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -621,7 +633,8 @@
     <MESSAGE value="Nice output images. Edges scratchy." />
     <MESSAGE value="User interface implemented. Ask for input image name and output image name." />
     <MESSAGE value="Nicer UI with error handling for mistaken input image names." />
-    <option name="LAST_COMMIT_MESSAGE" value="Nicer UI with error handling for mistaken input image names." />
+    <MESSAGE value="Handling image output with &quot;import os&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Handling image output with &quot;import os&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -662,7 +675,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#284#781#0" expanded="true" />
-            <element signature="e#1630#1644#0" expanded="true" />
+            <element signature="e#1722#1736#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -811,17 +824,7 @@
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#284#781#0" expanded="true" />
-            <element signature="e#1630#1644#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="80" column="25" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#1722#1736#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -831,6 +834,16 @@
         <state relative-caret-position="315">
           <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

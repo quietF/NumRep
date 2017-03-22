@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.13)  22 MAR 2017 11:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.13)  22 MAR 2017 14:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -508,31 +508,75 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: img/desync2.png Graphic file (type png)
  <use img/desync2.png>
 Package pdftex.def Info: img/desync2.png used on input line 27.
-(pdftex.def)             Requested size: 361.40659pt x 236.85106pt.
+(pdftex.def)             Requested size: 351.76701pt x 230.53708pt.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/desync2.png>]
-(./report1.bbl) [2] (./report1.aux) ) 
+<img/line0.png, id=13, 578.16pt x 433.62pt>
+File: img/line0.png Graphic file (type png)
+ <use img/line0.png>
+Package pdftex.def Info: img/line0.png used on input line 46.
+(pdftex.def)             Requested size: 252.98534pt x 189.73474pt.
+
+Overfull \hbox (12.0476pt too wide) in paragraph at lines 46--47
+ [][] 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 49.
+<img/line1.png, id=15, 578.16pt x 433.62pt>
+File: img/line1.png Graphic file (type png)
+ <use img/line1.png>
+Package pdftex.def Info: img/line1.png used on input line 52.
+(pdftex.def)             Requested size: 252.98534pt x 189.73474pt.
+
+Overfull \hbox (12.0476pt too wide) in paragraph at lines 52--53
+ [][] 
+ []
+
+[2 <./img/line0.png> <./img/line1.png>]
+<img/xcorrelation.png, id=21, 578.16pt x 433.62pt>
+File: img/xcorrelation.png Graphic file (type png)
+ <use img/xcorrelation.png>
+Package pdftex.def Info: img/xcorrelation.png used on input line 76.
+(pdftex.def)             Requested size: 351.76701pt x 263.82631pt.
+
+[3 <./img/xcorrelation.png>] <img/simple.png, id=30, 591.20876pt x 387.4475pt>
+File: img/simple.png Graphic file (type png)
+
+<use img/simple.png>
+Package pdftex.def Info: img/simple.png used on input line 93.
+(pdftex.def)             Requested size: 351.76701pt x 230.53708pt.
+ [4 <./img/simple.png (PNG copy)>] (./report1.bbl) [5]
+(./report1.aux) ) 
 Here is how much of TeX's memory you used:
- 2265 strings out of 494953
- 30693 string characters out of 6180976
- 94082 words of memory out of 5000000
- 5534 multiletter control sequences out of 15000+600000
- 6880 words of font info for 25 fonts, out of 8000000 for 9000
+ 2308 strings out of 494953
+ 31292 string characters out of 6180976
+ 94133 words of memory out of 5000000
+ 5568 multiletter control sequences out of 15000+600000
+ 9318 words of font info for 33 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,7n,32p,857b,221s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on report1.pdf (2 pages, 257634 bytes).
+ 37i,7n,32p,984b,275s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmtt12.pfb>
+Output written on report1.pdf (5 pages, 475070 bytes).
 PDF statistics:
- 40 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 73 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
