@@ -1,0 +1,9 @@
+To run the program, a UNIX shell is requiered.
+
+in a terminal, type: python3 FixThem.py
+
+This will prompt the user to type the input image (which should be located in the img_in/ folder)
+Then, a window will show the enhanced image, and the terminal will ask if the user wishes to 
+save the new image (y/n).
+Finally, the name of the output image is asked to the user. (by default, this image will be 
+located in the img_out/ folder).
