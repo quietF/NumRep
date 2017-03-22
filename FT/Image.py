@@ -80,5 +80,8 @@ class Image(object):
 
     def save_image(self):
 
+        if os.path.isdir("img_out") == False:
+            os.mkdir("img_out")
+
         out_image = str("img_out/" + input("Output image name (just name, not the path) : "))
         misc.imsave(out_image, self.image)
