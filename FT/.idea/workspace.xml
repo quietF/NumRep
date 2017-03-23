@@ -4,11 +4,9 @@
     <list default="true" id="48826887-b36d-415d-8a58-5832bd51bb29" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.pdf" afterPath="$PROJECT_DIR$/doc/report1.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Image.py" afterPath="$PROJECT_DIR$/Image.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.aux" afterPath="$PROJECT_DIR$/doc/report1.aux" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.log" afterPath="$PROJECT_DIR$/doc/report1.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.tex" afterPath="$PROJECT_DIR$/doc/report1.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.tex.backup" afterPath="$PROJECT_DIR$/doc/report1.tex.backup" />
     </list>
     <ignored path="FT.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Image.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Image.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="78" selection-start-line="33" selection-start-column="78" selection-end-line="33" selection-end-column="78" />
+            <state relative-caret-position="105">
+              <caret line="7" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="92" selection-end-column="42" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -48,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FixThem.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FixThem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FixThem.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+              <caret line="16" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -566,7 +564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490194653688</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added a few comments">
+      <created>1490277289594</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1490277289594</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -580,14 +585,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="52" width="1920" height="1028" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1995731" sideWeight="0.4935065" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3268817" sideWeight="0.496788" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275862" sideWeight="0.50214136" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873562" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3268817" sideWeight="0.49785867" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3268817" sideWeight="0.49785867" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41935483" sideWeight="0.49785867" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3268817" sideWeight="0.49785867" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -637,7 +642,8 @@
     <MESSAGE value="User interface implemented. Ask for input image name and output image name." />
     <MESSAGE value="Nicer UI with error handling for mistaken input image names." />
     <MESSAGE value="Handling image output with &quot;import os&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Handling image output with &quot;import os&quot;" />
+    <MESSAGE value="Added a few comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a few comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -826,21 +832,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FixThem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="78" selection-start-line="33" selection-start-column="78" selection-end-line="33" selection-end-column="78" />
+        <state relative-caret-position="105">
+          <caret line="7" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="92" selection-end-column="42" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FixThem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
