@@ -39,6 +39,9 @@ class Image(object):
         return xcorrelation.real
 
     def shift(self):
+        """
+        Use get_xcorrelation() function to shift the input image into place.
+        """
 
         xcorrelation_max = np.zeros(self.cols)
         shift = np.zeros(self.cols, dtype=int)
@@ -58,7 +61,10 @@ class Image(object):
                 self.image[i] = np.roll(self.image[i], -shift[i])
 
     def clean_up(self):
-
+        """
+        Proposed function for cleaning up edges.
+        Not used
+        """
         cleaned_lines = 0
         xcorrelation_argmax = np.zeros(self.rows)
 
