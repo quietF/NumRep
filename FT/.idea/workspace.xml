@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="48826887-b36d-415d-8a58-5832bd51bb29" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.pdf" afterPath="$PROJECT_DIR$/doc/report1.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.aux" afterPath="$PROJECT_DIR$/doc/report1.aux" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.log" afterPath="$PROJECT_DIR$/doc/report1.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/report1.tex" afterPath="$PROJECT_DIR$/doc/report1.tex" />
-    </list>
+    <list default="true" id="48826887-b36d-415d-8a58-5832bd51bb29" name="Default" comment="" />
     <ignored path="FT.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
