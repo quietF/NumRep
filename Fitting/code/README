@@ -1,0 +1,30 @@
+# README #
+
+Greetings,
+
+This code gets the best-fit values of an input file located in the folder in/
+
+At the moment, it takes the file 'in/DecayTimesData.txt'.
+
+To run the code type: 
+
+$ bash run.sh
+
+For it to work, an installation of python3 is required. Dependencies such as numpy, scipy and matplotlib should be
+installed when typing the mentioned command. 
+
+The code creates a virtual environment called Fitting. To access it, type:
+
+$ . Fitting/bin/activate
+
+The code is in three files: 
+
+ML_NLL.py - which, when run alone gets the best-fit parameters of the 'in/DecayTimesData.txt' data.
+
+MCsim.py - where a python class is setup to create Monte Carlo simulations using the best-fit parameters determined in ML_NLL.py
+
+run_dmc.py - when run starts 500 Monte Carlo simulations, each with 10.000 decay times. 
+
+### Who do I talk to? ###
+
+Contact via email: Andres Cathey through s1671778@sms.ed.ac.uk
